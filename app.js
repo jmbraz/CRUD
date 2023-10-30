@@ -1,5 +1,6 @@
 
 const express = require('express')
+const userRepository = require("./repositories/users")
 //Passa a informação do express para a constante express.
 const app = express()
 //Grupo de funções do express.
@@ -8,23 +9,10 @@ const port = 3000
 app.use(express.json());
 //Responsável pela tradução de requisições HTTP para JSON.
 
-let database = [
-
-    {
-        id: "1",
-        name: "jmbraz"
-
-
-    },
-    {
-        id: "2",
-        name: "zarbmj"
-    }
-]
 //Banco de dados, contém lista de informações.
 
 app.get('/users', (request, response) => {
-  response.json(database);
+  response.json(userRepository.getUsers);
 })
 
 //Obter usúarios do banco de dados.
@@ -32,9 +20,7 @@ app.get('/users', (request, response) => {
 app.get('/users/:id',  (request, response) => { 
   const idUser = request.params.id;
 //Buscar ID da requisição.
-
-const user = database.filter((usuario) => usuario.id === idUser);
-response.json(user);
+response.json(userRepository.getUserById(idUser));
 //Buscar o usuário no database.
 })
 
@@ -79,7 +65,7 @@ app.delete("/users/:id", (request, response) => {
       return usuario
   })
     //Percorrer o banco.
-
+response.json(database);
 
 
 })
@@ -88,5 +74,3 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 //Descobre a porta do app.
-
-
