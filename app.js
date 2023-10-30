@@ -79,7 +79,7 @@ app.delete("/users/:id", (request, response) => {
       return usuario
   })
     //Percorrer o banco.
-
+response.json(database);
 
 
 })
